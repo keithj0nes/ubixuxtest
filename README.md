@@ -2,7 +2,7 @@
 
 Ubix is looking for great UX engineers.  Here's the outline of a take-home project to show us what you've got.
 
-## The Challege
+## The Challenge
 
 The team wants a simple way to track their TODO lists.
 
