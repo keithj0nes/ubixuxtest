@@ -27,6 +27,12 @@ button {
   color: #ccc;
 }
 
+
+///////////////
+// HOME PAGE //
+///////////////
+
+
 .logout-btn {
   position: absolute;
   right: 20px;
@@ -90,13 +96,9 @@ button {
 }
 
 
-
-
-
 ////////////////
 // LOGIN PAGE //
 ////////////////
-
 
 
 .login-form-box {
@@ -127,31 +129,23 @@ button {
 	border-right: 1px solid #ccc;
 }
 
-
-
 .org-members {
   border-left: 1px solid #aaa;
   padding-bottom: 20px;
-  // background-color: #eee;
 
   a {
     display: inline-block;
-    // background: #eee;
     font-size: 18px;
     cursor: pointer;
-    // width: 100%;
     padding: 20px;
-    // color: red !important;
   }
 
   a:hover {
     background: #ccc;
-    // color: white !important;
   }
 
   a:active {
     background: #aaa;
-    // color: white !important;
   }
 
   .hideme {
@@ -159,8 +153,6 @@ button {
       overflow: hidden;
   }
 }
-
-
 
 
 footer {
@@ -178,13 +170,7 @@ footer {
 }
 
 
-
-
 /***** Media queries *****/
-
-@media (min-width: 992px) and (max-width: 1199px) {}
-
-@media (min-width: 768px) and (max-width: 991px) {}
 
 @media (max-width: 767px) {
 
@@ -194,7 +180,6 @@ footer {
     margin: 65px 30px 65px 30px;
     border-right: 0;
 		border-top: 1px solid #ccc;
-    // border-top: 1px solid rgba(255, 255, 255, 0.6);
   }
 
   .org-members {
@@ -209,17 +194,10 @@ footer {
     }
   }
 
-
 }
 
 @media (max-width: 415px) {
 
 	h1, h2 { font-size: 32px; }
-
-  // .todo-form {
-  //   button {
-  //     margin-top: 10px;
-  //   }
-  // }
 
 }
