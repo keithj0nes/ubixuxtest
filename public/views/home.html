@@ -1,0 +1,116 @@
+
+<div class="">
+  <button type="button" class="btn-link logout-btn text-white" ng-click="logoutUser()">Logout</button>
+
+</div>
+
+<div class="container-fluid clearfix">
+  <div class="row">
+    <div class="col text-center">
+      <h1 class="text-white"> Hi {{userName}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <h5 class="text-gray">- {{userOrg}} -</h5>
+
+    </div>
+  </div>
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-9" >
+      <!-- create ng-if tabs -->
+      <div class="row text-center todo-switch nav-tabs">
+        <a class="col-6" ng-click="archive = false">Current Todos</a>
+  		  <a class="col-6" ng-click="archive = true" data-toggle="tab">Archived Todos</a>
+      </div>
+
+
+
+<!--
+  TO-DO SECTION
+-->
+
+      <div class="" ng-hide="archive">
+
+        <h1>You have {{todoTotal}} things to do</h1>
+
+        <form class="todo-form form-horizontal">
+          <div class="row">
+            <div class="col-sm-9 col-lg-10">
+              <input type="text" name="" value="" class="form-control" placeholder="Add your todo here" ng-model="inputTodo">
+            </div>
+            <div class="col-sm-3 col-lg-2">
+              <button ng-click="addTodo(inputTodo)"class="form-control btn-primary" name="button">Add</button>
+            </div>
+          </div>
+        </form>
+
+        <ul class="list-unstyled">
+          <li ng-repeat="todo in toDoArray track by $index" class="todo-item clearfix">
+            <span ng-hide="editing" class="done-{{todo.completed}} "ng-click="setCompleted(todo)">{{todo.name}}</span>
+            <form ng-show="editing" ng-submit="editing = false">
+              <input type="text" ng-model="todo.name" placeholder="Name" ng-required/>
+              <button class="btn btn-success btn-sm" type="submit" ng-click="updateTodo(todo)">Save</button>
+            </form>
+            <div class="float-right">
+              <button class="edit btn btn-info btn-sm" ng-click="editing = true" ng-hide="editing" name="button" >edit</button>
+              <button class="delete btn btn-danger btn-sm" ng-hide="editing" ng-click="deleteTodo(todo.id)">x</button>
+            </div>
+            </li>
+        </ul>
+        <div class="row archive-btn">
+          <div class="col-md-8 col-lg-6 mx-auto">
+            <button class="btn btn-secondary form-control" ng-click="archiveCompleted()">Archive All Completed</button>
+          </div>
+        </div>
+
+      </div>
+
+
+<!--
+  ARCHIVED SECTION
+-->
+
+
+      <div class="" ng-show="archive" >
+        <h1>You have completed {{archivedTotal}} things</h1>
+
+        <ul class="list-unstyled">
+          <li ng-repeat="atodo in archivedArray track by $index" class="done-{{atodo.archive}} archived-item clearfix">
+            <span>{{atodo.name}} </span>
+            <div class="float-right">
+              {{atodo.datecompleted | date : 'EEE, M/d - h:mma'}}
+              <button class="delete btn btn-danger btn-sm"  ng-click="deleteTodo(atodo.id)">x</button>
+            </div>
+          </li>
+        </ul>
+
+        <div class="row archive-btn">
+          <div class="col-md-8 col-lg-6 mx-auto">
+            <!-- <button class="btn btn-secondary form-control" ng-click="deleteCompleted()" class="btn">DELETE ALL COMPLETED</button> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <div class="col-md-3 org-members" >
+      <div class="row text-decoration show-org nav-tabs">
+        <a class="show-org col-12 text-center" ng-click="hideOrg()">Team Members </a>
+      </div>
+      <div ng-class="{'hideme': torf}" ng-repeat="users in usersInOrg">
+        <br>
+        {{users.name_first}} {{users.name_last}}<br>
+        {{users.email}}
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+</div> <!--end main container div -->

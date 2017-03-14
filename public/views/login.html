@@ -1,0 +1,63 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1 class="text-white">ubiDO</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <p class="text-gray">A todo app</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5 login-form-box">
+
+      <div class="form-top">
+        <h2>Sign Up</h2>
+      </div>
+
+      <div class="form-bottom">
+        <form ng-submit="createAccount(org_name, name_first, name_last, email, password)">
+          Organization
+          <input type="text" class="form-control" ng-model="org_name" required>
+          First Name
+          <input type="text" class="form-control" ng-model="name_first" required>
+          Last Name
+          <input type="text" class="form-control" ng-model="name_last" required>
+          Email
+          <input type="email" class="form-control" ng-model="email" required>
+          Password
+          <input type="password" class="form-control" ng-model="password" required>
+          Confirm Password
+          <input type="password" class="form-control" ng-model="confirm_password" required>
+          <br />
+          <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Create Account</button>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="col-md-1 middle-border"></div>
+    <div class="col-md-1"></div>
+
+    <div class="col-md-5 login-form-box">
+
+      <div class="form-top">
+        <h2>Log In</h2>
+      </div>
+
+      <div class="form-bottom">
+        <form ng-submit="returnUserLogin(returnEmail, returnPassword)">
+          Email
+          <input type="email" name="" value="" class="form-control" ng-model="returnEmail" required>
+          Password 
+          <input type="password" name="" value="" class="form-control" ng-model="returnPassword" required>
+          <br />
+          <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Log In</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
