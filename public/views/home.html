@@ -23,8 +23,10 @@
     <div class="col-md-9" >
       <!-- create ng-if tabs -->
       <div class="row text-center todo-switch nav-tabs">
-        <a class="col-6" ng-click="archive = false">Current Todos</a>
-  		  <a class="col-6" ng-click="archive = true" data-toggle="tab">Archived Todos</a>
+        <!-- <a class="col-6 " data-toggle="tab" ng-click="archive = false">Current Todos</a> -->
+        <a class="col-6" ng-class="{'selected': tabName=='tab1'}" ng-click="tabName='tab1'" ng-init="tabName='tab1'">Current Todos</a>
+  		  <!-- <a class="col-6 " data-toggle="tab" ng-click="archive = true" data-toggle="tab">Archived Todos</a> -->
+        <a class="col-6" ng-class="{'selected': tabName=='tab2'}" ng-click="tabName='tab2'">Archived Todos</a>
       </div>
 
 
@@ -32,10 +34,12 @@
 <!--
   TO-DO SECTION
 -->
+<div ng-switch="tabName">
 
-      <div class="" ng-hide="archive">
 
-        <h1>You have {{todoTotal}} things to do</h1>
+      <div class="" ng-switch-when="tab1">
+
+        <h1>You have {{todoTotal}} {{todoText}} to do</h1>
 
         <form class="todo-form form-horizontal">
           <div class="row">
@@ -50,12 +54,14 @@
 
         <ul class="list-unstyled">
           <li ng-repeat="todo in toDoArray track by $index" class="todo-item clearfix">
-            <span ng-hide="editing" class="done-{{todo.completed}} "ng-click="setCompleted(todo)">{{todo.name}}</span>
+            <span ng-hide="editing" class="done-{{todo.completed}} todo-item-text "ng-click="setCompleted(todo)">{{todo.name}}</span>
             <form ng-show="editing" ng-submit="editing = false">
               <input type="text" ng-model="todo.name" placeholder="Name" ng-required/>
               <button class="btn btn-success btn-sm" type="submit" ng-click="updateTodo(todo)">Save</button>
             </form>
             <div class="float-right">
+              {{todo.datecompleted | date : 'EEE, M/d - h:mma'}}
+
               <button class="edit btn btn-info btn-sm" ng-click="editing = true" ng-hide="editing" name="button" >edit</button>
               <button class="delete btn btn-danger btn-sm" ng-hide="editing" ng-click="deleteTodo(todo.id)">x</button>
             </div>
@@ -75,8 +81,8 @@
 -->
 
 
-      <div class="" ng-show="archive" >
-        <h1>You have completed {{archivedTotal}} things</h1>
+      <div class="" ng-switch-when="tab2">
+        <h1>You have completed {{archivedTotal}} {{archivedText}}</h1>
 
         <ul class="list-unstyled">
           <li ng-repeat="atodo in archivedArray track by $index" class="done-{{atodo.archive}} archived-item clearfix">
@@ -95,6 +101,8 @@
         </div>
 
       </div>
+    </div>
+
     </div>
 
 

@@ -52,12 +52,16 @@ button {
       padding: 20px;
     }
 
-    a:hover {
+    a:hover, .selected {
       background: #ccc;
     }
 
     a:active {
       background: #aaa;
+    }
+
+    .selected {
+      // background: #ccc;
     }
   }
 
@@ -93,6 +97,10 @@ button {
   transition: opacity 0.1s linear;
   -moz-transition: opacity 0.1s linear;
   -webkit-transition: opacity 0.1s linear;
+}
+
+.todo-item-text:hover {
+  cursor: pointer;
 }
 
 

@@ -19,18 +19,39 @@
 
       <div class="form-bottom">
         <form ng-submit="createAccount(org_name, name_first, name_last, email, password)">
-          Organization
-          <input type="text" class="form-control" ng-model="org_name" required>
+
+          <div class="">
+            <span class="form-control-label">Organization</span>
+            <input type="text" class="form-control" ng-model="org_name" required>
+          </div>
+          <!-- Organization
+          <input type="text" class="form-control" ng-model="org_name" required> -->
           First Name
           <input type="text" class="form-control" ng-model="name_first" required>
           Last Name
           <input type="text" class="form-control" ng-model="name_last" required>
-          Email
-          <input type="email" class="form-control" ng-model="email" required>
-          Password
-          <input type="password" class="form-control" ng-model="password" required>
-          Confirm Password
-          <input type="password" class="form-control" ng-model="confirm_password" required>
+
+          <div ng-class="{'has-danger': emailExists}">
+            <span class="form-control-label">Email</span>
+            <input type="email" class="form-control" ng-model="email" required>
+            <div class="form-control-feedback">
+              {{email_feedback}}
+            </div>
+          </div>
+
+          <div class="">
+            <span class="form-control-label">Password</span>
+            <input type="password" class="form-control" ng-model="password" required>
+          </div>
+
+          <div ng-class="{'has-danger': passNotMatch}">
+            <span class="form-control-label">Confirm Password</span>
+            <input type="password" class="form-control" ng-model="confirm_password" required>
+            <div class="form-control-feedback">{{pass_confirm_feedback}}</div>
+          </div>
+
+          <!-- Confirm Password
+          <input type="password" class="form-control" ng-model="confirm_password" required> -->
           <br />
           <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Create Account</button>
         </form>
@@ -49,10 +70,24 @@
 
       <div class="form-bottom">
         <form ng-submit="returnUserLogin(returnEmail, returnPassword)">
-          Email
+
+          <div ng-class="{'has-danger': returnAccount}">
+          <!-- <div class="has-warning"> -->
+
+            <span class="form-control-label">Email</span>
+            <input type="email" class="form-control" ng-model="returnEmail" required>
+
+            <span class="form-control-label">Password</span>
+            <input type="password" class="form-control" ng-model="returnPassword" required>
+            <div class="form-control-feedback">
+              {{return_feedback}}
+            </div>
+          </div>
+
+          <!-- Email
           <input type="email" name="" value="" class="form-control" ng-model="returnEmail" required>
-          Password 
-          <input type="password" name="" value="" class="form-control" ng-model="returnPassword" required>
+          Password
+          <input type="password" name="" value="" class="form-control" ng-model="returnPassword" required> -->
           <br />
           <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Log In</button>
         </form>

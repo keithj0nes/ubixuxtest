@@ -41,7 +41,9 @@ function addTodo(req, res, next){
 function completeTodo(req, res, next){
   const db = app.get('db');
 
-  db.run("UPDATE todo SET completed = $1, datecompleted = timenow() WHERE id = $2",[req.body.completed, req.params.id], function(err, todo){
+  console.log(req.body, "req.body");
+
+  db.run("UPDATE todo SET completed = $1, datecompleted = $3 WHERE id = $2",[req.body.completed, req.params.id, req.body.datecompleted], function(err, todo){
     if(err){
       console.log(err);
       res.status(500).send(err)

@@ -27,11 +27,23 @@ angular.module("toDoApp").controller("loginController", function ($scope, loginS
       password: password
     };
 
+    $scope.emailExists = false;
+    $scope.email_feedback = "";
+    $scope.passNotMatch = false;
+    $scope.pass_confirm_feedback = "";
+
     if (password != $scope.confirm_password) {
-      alert("Your passwords are not the same");
+      // alert("Your passwords are not the same")
+      $scope.passNotMatch = true;
+      $scope.pass_confirm_feedback = "**Passwords must match**";
     } else {
       loginService.createAccount(newUserInfo).then(function (res) {
-        $location.path("/home");
+        if (res.accountExists === true) {
+          $scope.emailExists = true;
+          $scope.email_feedback = "**Account already exists for that email address**";
+        } else {
+          $location.path("/home");
+        }
       });
     }
   };
@@ -42,10 +54,14 @@ angular.module("toDoApp").controller("loginController", function ($scope, loginS
       password: password
     };
 
+    $scope.returnAccount = false;
+    $scope.return_feedback = "";
+
     loginService.returnUserLogin(returnUserInfo).then(function (res) {
       // console.log(res, "response from loginService");
-      if (res.length < 1) {
-        alert("incorrect email/password");
+      if (res.accountCredentials === false) {
+        $scope.returnAccount = true;
+        $scope.return_feedback = "**Incorrect email/pass combination**";
       } else {
         $location.path("/home");
       }
@@ -154,7 +170,18 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
       // console.log($scope.toDoArray);
 
       $scope.todoTotal = $scope.toDoArray.length;
+
+      if ($scope.todoTotal === 1) {
+        $scope.todoText = "thing";
+      } else {
+        $scope.todoText = "things";
+      }
       $scope.archivedTotal = $scope.archivedArray.length;
+      if ($scope.todoTotal === 1) {
+        $scope.archivedText = "thing";
+      } else {
+        $scope.archivedText = "things";
+      }
     });
   };
 
@@ -203,7 +230,6 @@ angular.module("toDoApp").service("loginService", function ($http) {
       url: "/api/auth/createaccount",
       data: newUserInfo
     }).then(function (res) {
-      // console.log(res, "createaccount");
       return res.data;
     });
   };
@@ -248,8 +274,6 @@ angular.module("toDoApp").service("loginService", function ($http) {
 "use strict";
 
 angular.module("toDoApp").service("mainService", function ($http) {
-
-  var arrrrr = ["wash hands", "buy clothes"];
 
   this.addTodo = function (x) {
     // console.log(x, "in service");
@@ -326,20 +350,24 @@ angular.module("toDoApp").service("mainService", function ($http) {
   };
 
   this.setCompleted = function (todo) {
-    // console.log(todo.completed, "set completed to true / false in service");
-    if (todo.completed === false) {
-      todo.completed = true;
+
+    todo.completed = !todo.completed;
+
+    if (todo.datecompleted) {
+      todo.datecompleted = null;
     } else {
-      todo.completed = false;
+      todo.datecompleted = new Date();
     }
 
-    var todocompleted = {
-      completed: todo.completed
+    var todoObj = {
+      completed: todo.completed,
+      datecompleted: todo.datecompleted
     };
+
     return $http({
       method: "PUT",
       url: "/api/settodo/" + todo.id,
-      data: todocompleted
+      data: todoObj
     }).success(function () {
       console.log("todo completed updated");
     });

@@ -7,7 +7,6 @@ angular.module("toDoApp").service("loginService", function($http){
       url: "/api/auth/createaccount",
       data: newUserInfo
     }).then(function(res) {
-      // console.log(res, "createaccount");
       return res.data
     })
   }

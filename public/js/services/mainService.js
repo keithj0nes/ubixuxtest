@@ -1,7 +1,5 @@
 angular.module("toDoApp").service("mainService", function($http){
 
-  var arrrrr = ["wash hands", "buy clothes"];
-
   this.addTodo = function(x){
     // console.log(x, "in service");
 
@@ -78,20 +76,24 @@ angular.module("toDoApp").service("mainService", function($http){
 
 
   this.setCompleted = function(todo){
-    // console.log(todo.completed, "set completed to true / false in service");
-    if(todo.completed === false){
-      todo.completed = true;
+
+    todo.completed = !todo.completed;
+
+    if(todo.datecompleted){
+      todo.datecompleted = null;
     } else {
-      todo.completed = false;
+      todo.datecompleted = new Date()
     }
 
-    let todocompleted = {
-      completed: todo.completed
-    };
+    var todoObj = {
+      completed: todo.completed,
+      datecompleted: todo.datecompleted
+    }
+
     return $http({
       method: "PUT",
       url: "/api/settodo/" + todo.id,
-      data: todocompleted
+      data: todoObj
     }).success(function(){
         console.log("todo completed updated");
     })

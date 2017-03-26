@@ -101,7 +101,18 @@ $scope.hideOrg = function(){
       // console.log($scope.toDoArray);
 
       $scope.todoTotal = $scope.toDoArray.length;
+
+      if($scope.todoTotal === 1) {
+        $scope.todoText = "thing"
+      } else {
+        $scope.todoText = "things"
+      }
       $scope.archivedTotal = $scope.archivedArray.length;
+      if($scope.todoTotal === 1) {
+        $scope.archivedText = "thing"
+      } else {
+        $scope.archivedText = "things"
+      }
     });
   }
 
