@@ -1,13 +1,12 @@
 angular.module("toDoApp").service("mainService", function($http){
 
   this.addTodo = function(x){
-    // console.log(x, "in service");
-
     var dataObj = {
       todo: x,
       completed: false,
       archived: false
     }
+
     return $http({
       method: "POST",
       url: "/api/todo",
@@ -39,12 +38,10 @@ angular.module("toDoApp").service("mainService", function($http){
 
     for (var i = 0; i < toDoArray.length; i++) {
       if(toDoArray[i].completed === true){
-        console.log(toDoArray[i].id, "THIS IS DONE");
          $http({
           method: "DELETE",
           url: "/api/deletecompleted/" + toDoArray[i].id
         }).then(function(res){
-          console.log(res.data, "innnnn");
           return res.data;
         })
       }
@@ -52,7 +49,6 @@ angular.module("toDoApp").service("mainService", function($http){
   }
 
   this.archiveCompleted = function(toDoArray){
-
     for (var i = 0; i < toDoArray.length; i++) {
       if(toDoArray[i].completed === true){
         toDoArray[i].archived = true;
@@ -61,22 +57,18 @@ angular.module("toDoApp").service("mainService", function($http){
           archived: toDoArray[i].archived
         }
 
-        // console.log(setarchivetrue, "in service again");
-
         $http({
           method: "PUT",
           url: "/api/archivetodo/" + toDoArray[i].id,
           data: setarchivetrue
         }).then(function(res){
-          // console.log(res, "response in service");
+          return res.data;
         })
       }
     }
   }
 
-
   this.setCompleted = function(todo){
-
     todo.completed = !todo.completed;
 
     if(todo.datecompleted){
@@ -99,7 +91,6 @@ angular.module("toDoApp").service("mainService", function($http){
     })
   }
 
-
   this.updateTodo = function(todo){
     // console.log(todo, "updateTodo in service");
     let updatedObj = {
@@ -111,9 +102,8 @@ angular.module("toDoApp").service("mainService", function($http){
       url: "/api/todo/" + todo.id,
       data: updatedObj
     }).then(function(res){
-      // console.log(res, "updateTodo worked");
+      return res.data;
     })
   }
-
 
 })

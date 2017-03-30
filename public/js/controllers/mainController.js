@@ -11,15 +11,7 @@ $scope.hideOrg = function(){
   }
 }
 
-
-//DONE --- create function that updates checked off todo with new name and sets completed to false when saved;
-//DONE --- change deletealltodo to an archivetodo function
-//DONE --- archivetodo pushes to an array?
-//DONE --- ng-if todo / archive pages
-//DONE --- on setcomplete function, set completed time to timenow
-//show timenow on hover of todo item (css)
-
-
+$scope.inputTodo = "";
 
   $scope.updateTodo = function(todo){
     mainService.updateTodo(todo).then(function(res){
@@ -34,11 +26,9 @@ $scope.hideOrg = function(){
   }
 
   $scope.deleteTodo = function(id){
-    // console.log(id, "deleted id from db");
     mainService.deleteTodo(id).then(function(res){
       $scope.toDoArray = [];
       $scope.archivedArray = [];
-      // console.log(res, "alksdjgalsd");
       $scope.getTodoList();
     });
   }
@@ -67,19 +57,18 @@ $scope.hideOrg = function(){
   }
 
   $scope.addTodo = (todo) => {
-
+    $scope.inputTodo = "";
     if(todo){
       mainService.addTodo(todo)
       $scope.toDoArray = [];
       $scope.archivedArray = [];
       setTimeout(function () {
-        // $scope.addLastItem();
         $scope.getTodoList();
       }, 10);
       $scope.inputTodo = "";
+      console.log($scope.inputTodo);
     }
   }
-
 
   $scope.toDoArray = [];
   $scope.archivedArray = [];
@@ -88,20 +77,15 @@ $scope.hideOrg = function(){
     mainService.getTodoList().then(function(res){
 
     ////////// this for loop will push items in toDoArray and archivedArray /////////////
-
       for (var i = 0; i < res.length; i++) {
         if(res[i].archived === false){
-          // console.log("toDoArray being pushed");
           $scope.toDoArray.push(res[i])
         } else {
-          // console.log('archivedArray being pushed');
           $scope.archivedArray.push(res[i])
         }
       }
-      // console.log($scope.toDoArray);
 
       $scope.todoTotal = $scope.toDoArray.length;
-
       if($scope.todoTotal === 1) {
         $scope.todoText = "thing"
       } else {
@@ -111,22 +95,19 @@ $scope.hideOrg = function(){
       if($scope.todoTotal === 1) {
         $scope.archivedText = "thing"
       } else {
-        $scope.archivedText = "things"
+        $scope.archivedt = "things"
       }
     });
   }
 
-
   $scope.addLastItem = function(){
     mainService.getTodoList().then(function(res){
-      // console.log("addLastItem");
       $scope.toDoArray.push(res[res.length-1])
       $scope.todoTotal++;
     })
   }
 
   $scope.logoutUser = function(){
-    // console.log("logout clicked");
     loginService.logoutUser().then(function(res){
       $location.path("/");
     });
@@ -134,7 +115,6 @@ $scope.hideOrg = function(){
 
   $scope.getUsername = function(){
     loginService.getUsername().then(function(res){
-      // console.log(res, "in controller");
       $scope.userName = res.name_first;
       $scope.userOrg = res.org_name;
     })
@@ -142,15 +122,12 @@ $scope.hideOrg = function(){
 
   $scope.getUsersInOrg = function(){
     loginService.getUsersInOrg().then(function(res){
-      // console.log(res, "in controller");
       $scope.usersInOrg = res
     })
   }
 
-
   $scope.getUsername(); //get username on load
   $scope.getUsersInOrg(); //get users in organziation on load
   $scope.getTodoList(); //get all todo's on page load
-
 
 })

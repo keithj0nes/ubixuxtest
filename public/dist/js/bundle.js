@@ -18,6 +18,9 @@ angular.module("toDoApp", ["ui.router"]).config(function ($stateProvider, $urlRo
 
 angular.module("toDoApp").controller("loginController", function ($scope, loginService, $location) {
 
+  console.log("PLEASE DO NOT USE REAL PASSWORD! Please use dummy email and password for testing purposes");
+  alert("PLEASE DO NOT USE REAL PASSWORD! Please use dummy email and password for testing purposes");
+
   $scope.createAccount = function (org_name, name_first, name_last, email, password) {
     var newUserInfo = {
       org_name: org_name,
@@ -33,7 +36,6 @@ angular.module("toDoApp").controller("loginController", function ($scope, loginS
     $scope.pass_confirm_feedback = "";
 
     if (password != $scope.confirm_password) {
-      // alert("Your passwords are not the same")
       $scope.passNotMatch = true;
       $scope.pass_confirm_feedback = "**Passwords must match**";
     } else {
@@ -58,7 +60,6 @@ angular.module("toDoApp").controller("loginController", function ($scope, loginS
     $scope.return_feedback = "";
 
     loginService.returnUserLogin(returnUserInfo).then(function (res) {
-      // console.log(res, "response from loginService");
       if (res.accountCredentials === false) {
         $scope.returnAccount = true;
         $scope.return_feedback = "**Incorrect email/pass combination**";
@@ -83,13 +84,7 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
     }
   };
 
-  //DONE --- create function that updates checked off todo with new name and sets completed to false when saved;
-  //DONE --- change deletealltodo to an archivetodo function
-  //DONE --- archivetodo pushes to an array?
-  //DONE --- ng-if todo / archive pages
-  //DONE --- on setcomplete function, set completed time to timenow
-  //show timenow on hover of todo item (css)
-
+  $scope.inputTodo = "";
 
   $scope.updateTodo = function (todo) {
     mainService.updateTodo(todo).then(function (res) {
@@ -104,11 +99,9 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
   };
 
   $scope.deleteTodo = function (id) {
-    // console.log(id, "deleted id from db");
     mainService.deleteTodo(id).then(function (res) {
       $scope.toDoArray = [];
       $scope.archivedArray = [];
-      // console.log(res, "alksdjgalsd");
       $scope.getTodoList();
     });
   };
@@ -137,16 +130,16 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
   };
 
   $scope.addTodo = function (todo) {
-
+    $scope.inputTodo = "";
     if (todo) {
       mainService.addTodo(todo);
       $scope.toDoArray = [];
       $scope.archivedArray = [];
       setTimeout(function () {
-        // $scope.addLastItem();
         $scope.getTodoList();
       }, 10);
       $scope.inputTodo = "";
+      console.log($scope.inputTodo);
     }
   };
 
@@ -157,20 +150,15 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
     mainService.getTodoList().then(function (res) {
 
       ////////// this for loop will push items in toDoArray and archivedArray /////////////
-
       for (var i = 0; i < res.length; i++) {
         if (res[i].archived === false) {
-          // console.log("toDoArray being pushed");
           $scope.toDoArray.push(res[i]);
         } else {
-          // console.log('archivedArray being pushed');
           $scope.archivedArray.push(res[i]);
         }
       }
-      // console.log($scope.toDoArray);
 
       $scope.todoTotal = $scope.toDoArray.length;
-
       if ($scope.todoTotal === 1) {
         $scope.todoText = "thing";
       } else {
@@ -180,21 +168,19 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
       if ($scope.todoTotal === 1) {
         $scope.archivedText = "thing";
       } else {
-        $scope.archivedText = "things";
+        $scope.archivedt = "things";
       }
     });
   };
 
   $scope.addLastItem = function () {
     mainService.getTodoList().then(function (res) {
-      // console.log("addLastItem");
       $scope.toDoArray.push(res[res.length - 1]);
       $scope.todoTotal++;
     });
   };
 
   $scope.logoutUser = function () {
-    // console.log("logout clicked");
     loginService.logoutUser().then(function (res) {
       $location.path("/");
     });
@@ -202,7 +188,6 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
 
   $scope.getUsername = function () {
     loginService.getUsername().then(function (res) {
-      // console.log(res, "in controller");
       $scope.userName = res.name_first;
       $scope.userOrg = res.org_name;
     });
@@ -210,7 +195,6 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
 
   $scope.getUsersInOrg = function () {
     loginService.getUsersInOrg().then(function (res) {
-      // console.log(res, "in controller");
       $scope.usersInOrg = res;
     });
   };
@@ -218,7 +202,6 @@ angular.module("toDoApp").controller("mainController", function ($scope, mainSer
   $scope.getUsername(); //get username on load
   $scope.getUsersInOrg(); //get users in organziation on load
   $scope.getTodoList(); //get all todo's on page load
-
 });
 "use strict";
 
@@ -276,13 +259,12 @@ angular.module("toDoApp").service("loginService", function ($http) {
 angular.module("toDoApp").service("mainService", function ($http) {
 
   this.addTodo = function (x) {
-    // console.log(x, "in service");
-
     var dataObj = {
       todo: x,
       completed: false,
       archived: false
     };
+
     return $http({
       method: "POST",
       url: "/api/todo",
@@ -314,12 +296,10 @@ angular.module("toDoApp").service("mainService", function ($http) {
 
     for (var i = 0; i < toDoArray.length; i++) {
       if (toDoArray[i].completed === true) {
-        console.log(toDoArray[i].id, "THIS IS DONE");
         $http({
           method: "DELETE",
           url: "/api/deletecompleted/" + toDoArray[i].id
         }).then(function (res) {
-          console.log(res.data, "innnnn");
           return res.data;
         });
       }
@@ -327,7 +307,6 @@ angular.module("toDoApp").service("mainService", function ($http) {
   };
 
   this.archiveCompleted = function (toDoArray) {
-
     for (var i = 0; i < toDoArray.length; i++) {
       if (toDoArray[i].completed === true) {
         toDoArray[i].archived = true;
@@ -336,21 +315,18 @@ angular.module("toDoApp").service("mainService", function ($http) {
           archived: toDoArray[i].archived
         };
 
-        // console.log(setarchivetrue, "in service again");
-
         $http({
           method: "PUT",
           url: "/api/archivetodo/" + toDoArray[i].id,
           data: setarchivetrue
         }).then(function (res) {
-          // console.log(res, "response in service");
+          return res.data;
         });
       }
     }
   };
 
   this.setCompleted = function (todo) {
-
     todo.completed = !todo.completed;
 
     if (todo.datecompleted) {
@@ -384,7 +360,7 @@ angular.module("toDoApp").service("mainService", function ($http) {
       url: "/api/todo/" + todo.id,
       data: updatedObj
     }).then(function (res) {
-      // console.log(res, "updateTodo worked");
+      return res.data;
     });
   };
 });

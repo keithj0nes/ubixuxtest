@@ -1,7 +1,6 @@
 
 <div class="">
   <button type="button" class="btn-link logout-btn text-white" ng-click="logoutUser()">Logout</button>
-
 </div>
 
 <div class="container-fluid clearfix">
@@ -13,7 +12,6 @@
   <div class="row">
     <div class="col text-center">
       <h5 class="text-gray">- {{userOrg}} -</h5>
-
     </div>
   </div>
 </div>
@@ -23,24 +21,17 @@
     <div class="col-md-9" >
       <!-- create ng-if tabs -->
       <div class="row text-center todo-switch nav-tabs">
-        <!-- <a class="col-6 " data-toggle="tab" ng-click="archive = false">Current Todos</a> -->
         <a class="col-6" ng-class="{'selected': tabName=='tab1'}" ng-click="tabName='tab1'" ng-init="tabName='tab1'">Current Todos</a>
-  		  <!-- <a class="col-6 " data-toggle="tab" ng-click="archive = true" data-toggle="tab">Archived Todos</a> -->
         <a class="col-6" ng-class="{'selected': tabName=='tab2'}" ng-click="tabName='tab2'">Archived Todos</a>
       </div>
-
-
 
 <!--
   TO-DO SECTION
 -->
-<div ng-switch="tabName">
 
-
+    <div ng-switch="tabName">
       <div class="" ng-switch-when="tab1">
-
         <h1>You have {{todoTotal}} {{todoText}} to do</h1>
-
         <form class="todo-form form-horizontal">
           <div class="row">
             <div class="col-sm-9 col-lg-10">
@@ -61,29 +52,24 @@
             </form>
             <div class="float-right">
               {{todo.datecompleted | date : 'EEE, M/d - h:mma'}}
-
               <button class="edit btn btn-info btn-sm" ng-click="editing = true" ng-hide="editing" name="button" >edit</button>
               <button class="delete btn btn-danger btn-sm" ng-hide="editing" ng-click="deleteTodo(todo.id)">x</button>
             </div>
-            </li>
+          </li>
         </ul>
         <div class="row archive-btn">
           <div class="col-md-8 col-lg-6 mx-auto">
             <button class="btn btn-secondary form-control" ng-click="archiveCompleted()">Archive All Completed</button>
           </div>
         </div>
-
       </div>
-
 
 <!--
   ARCHIVED SECTION
 -->
 
-
       <div class="" ng-switch-when="tab2">
         <h1>You have completed {{archivedTotal}} {{archivedText}}</h1>
-
         <ul class="list-unstyled">
           <li ng-repeat="atodo in archivedArray track by $index" class="done-{{atodo.archive}} archived-item clearfix">
             <span>{{atodo.name}} </span>
@@ -99,13 +85,9 @@
             <!-- <button class="btn btn-secondary form-control" ng-click="deleteCompleted()" class="btn">DELETE ALL COMPLETED</button> -->
           </div>
         </div>
-
       </div>
     </div>
-
-    </div>
-
-
+  </div>
 
     <div class="col-md-3 org-members" >
       <div class="row text-decoration show-org nav-tabs">
@@ -119,6 +101,5 @@
       </div>
     </div>
   </div>
-
 
 </div> <!--end main container div -->

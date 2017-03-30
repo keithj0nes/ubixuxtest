@@ -19,7 +19,6 @@ var conn = massive.connectSync({
 app.set('db', conn);
 var db = app.get('db');
 
-
 // Middleware  =  =  =  =  =
 
 app.use(bodyParser.json());
@@ -42,8 +41,6 @@ function checkLoggedIn(req, res, next){
   }
 }
 
-
-
 // END POINTS  =  =  =  =  =  =  =  =  =
 
 // Authentication  = = = = =
@@ -61,7 +58,6 @@ app.put("/api/settodo/:id", checkLoggedIn, todoController.completeTodo);
 app.put("/api/archivetodo/:id", checkLoggedIn, todoController.archiveTodo);
 app.delete("/api/todo/:id", checkLoggedIn, todoController.deleteTodo);
 app.delete("/api/deletecompleted/:id", checkLoggedIn, todoController.deleteCompleted);
-
 
 app.listen(config.port, function(){
   console.log("listening on port ", config.port)

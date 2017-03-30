@@ -24,8 +24,6 @@
             <span class="form-control-label">Organization</span>
             <input type="text" class="form-control" ng-model="org_name" required>
           </div>
-          <!-- Organization
-          <input type="text" class="form-control" ng-model="org_name" required> -->
           First Name
           <input type="text" class="form-control" ng-model="name_first" required>
           Last Name
@@ -49,31 +47,22 @@
             <input type="password" class="form-control" ng-model="confirm_password" required>
             <div class="form-control-feedback">{{pass_confirm_feedback}}</div>
           </div>
-
-          <!-- Confirm Password
-          <input type="password" class="form-control" ng-model="confirm_password" required> -->
           <br />
           <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Create Account</button>
         </form>
       </div>
     </div>
 
-
     <div class="col-md-1 middle-border"></div>
     <div class="col-md-1"></div>
-
     <div class="col-md-5 login-form-box">
-
       <div class="form-top">
         <h2>Log In</h2>
       </div>
-
       <div class="form-bottom">
         <form ng-submit="returnUserLogin(returnEmail, returnPassword)">
 
           <div ng-class="{'has-danger': returnAccount}">
-          <!-- <div class="has-warning"> -->
-
             <span class="form-control-label">Email</span>
             <input type="email" class="form-control" ng-model="returnEmail" required>
 
@@ -83,16 +72,10 @@
               {{return_feedback}}
             </div>
           </div>
-
-          <!-- Email
-          <input type="email" name="" value="" class="form-control" ng-model="returnEmail" required>
-          Password
-          <input type="password" name="" value="" class="form-control" ng-model="returnPassword" required> -->
           <br />
           <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Log In</button>
         </form>
       </div>
-
     </div>
   </div>
 </div>
